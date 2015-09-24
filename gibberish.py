@@ -24,12 +24,32 @@ final_consonants = list(set(string.ascii_lowercase) - set('aeiou')
 
 vowels = 'aeiou'
 
+prefixes = (
+    'an', 'anti', 'ante', 'auto', 'circum', 'co', 'com', 'con', 'contra', 'de', 'dis',
+    'en', 'ex', 'extra', 'hetero', 'homo', 'hyper', 'in', 'inter', 'intra', 'macro',
+    'micro', 'mono', 'non', 'omni', 'post', 'pre', 'pro', 'sub', 'trans', 'tri', 'un', 'uni',
+)
+
+suffixes = (
+    'acy', 'al', 'ance', 'ence', 'dom', 'er', 'or', 'ism', 'ist', 'ity', 'ment',
+    'ness', 'ship', 'sion', 'tion', 'ate', 'en', 'ify', 'ize', 'ise', 'able', 'ible',
+    'al', 'esque', 'ful', 'ic', 'ical', 'ious', 'ous', 'ish', 'ive', 'less', 'y',
+    'ed', 'ing',
+)
+
+prefix_odds = 0.7
+suffix_odds = 0.7
 
 def generate_word():
     """Returns a random consonant-vowel-consonant pseudo-word."""
-    return ''.join(random.choice(s) for s in (initial_consonants,
+    word = ''.join(random.choice(s) for s in (initial_consonants,
                                               vowels,
                                               final_consonants))
+    if random.random() < prefix_odds:
+        word = random.choice(prefixes) + word
+    if random.random() < suffix_odds:
+        word = word + random.choice(suffixes)
+    return word
 
 
 def generate_words(wordcount):
